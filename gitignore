@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+data/evaluation_results.csv
+report/*.docx
