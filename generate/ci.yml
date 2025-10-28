@@ -1,0 +1,29 @@
+name: Evaluate Passwords
+
+on:
+push:
+branches: [ main, master ]
+workflow_dispatch: {}
+
+jobs:
+evaluate:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v4
+- name: Set up Python
+uses: actions/setup-python@v4
+with:
+python-version: '3.10'
+- name: Install dependencies
+run: |
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+- name: Generate sample passwords
+run: python scripts/generate_passwords.py
+- name: Run evaluation
+run: python scripts/evaluate_passwords.py --input data/sample_passwords.csv --output data/evaluation_results.csv
+- name: Upload results
+uses: actions/upload-artifact@v4
+with:
+name: evaluation-results
+path: data/evaluation_results.csv
